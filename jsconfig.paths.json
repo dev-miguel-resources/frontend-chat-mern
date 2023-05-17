@@ -1,15 +1,14 @@
 {
-  // compilación dinámica de los directorios
   "compilerOptions": {
-    "baseUrl": ".", // identifica donde se encuentra este archivo
-    "paths": { // decoradores de alias paths
+    "baseUrl": ".",
+    "paths": {
       "@molecules/*": ["src/molecules/*"],
       "@services/*": ["src/services/*"],
       "@hooks/*": ["src/hooks/*"],
       "@atoms/*": ["src/atoms/*"],
+      "@mocks/*": ["src/mocks/*"],
       "@assets/*": ["src/assets/*"],
       "@colors/*": ["src/colors/*"],
-      "@mocks/*": ["src/mocks/*"],
       "@redux/*": ["src/redux-toolkit/*"],
       "@root/*": ["src/*"]
     }

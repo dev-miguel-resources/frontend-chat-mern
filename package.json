@@ -18,6 +18,10 @@
   },
   "scripts": {
     "start": "react-app-rewired start",
+    "lint:check": "eslint . --ext .{js,jsx}",
+    "lint:fix": "npx eslint --fix .",
+    "prettier:check": "prettier --check src/**/*.{js,jsx,json}",
+    "prettier:fix": "prettier --write src/**/*.{js,jsx,json}",
     "build": "react-app-rewired build",
     "test": "react-app-rewired test"
   },

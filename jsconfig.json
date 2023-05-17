@@ -1,5 +1,4 @@
 {
-  // archivo de lectura de los paths
   "extends": "./jsconfig.paths.json",
   "compilerOptions": {
     "baseUrl": "."

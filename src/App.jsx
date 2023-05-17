@@ -1,25 +1,15 @@
-import logo from './logo.svg';
-import './App.css';
+import {AppRouter} from '@root/routes';
+import {BrowserRouter} from 'react-router-dom';
+import '@root/App.scss';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+// Design Pattern Atomic: https://medium.com/pixel-perfect/qu%C3%A9-es-el-dise%C3%B1o-at%C3%B3mico-a5cbed06688e
+// Design Pattern High Order Components (HOC): https://es.legacy.reactjs.org/docs/higher-order-components.html
+const App = () => (
+  <>
+    <BrowserRouter>
+      <AppRouter />
+    </BrowserRouter>
+  </>
+);
 
 export default App;
