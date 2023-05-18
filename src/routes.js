@@ -3,6 +3,7 @@ import AuthTabs from '@atoms/auth/auth-tabs/AuthTabs';
 import ForgotPassword from '@atoms/auth/forgot-password/ForgotPassword';
 import ResetPassword from '@atoms/auth/reset-password/ResetPassword';
 import Streams from '@atoms/social/streams/Streams';
+import ErrorNotFound from '@atoms/error/ErrorNotFound';
 
 export const AppRouter = () => {
   const elements = useRoutes([
@@ -21,6 +22,10 @@ export const AppRouter = () => {
     {
       path: '/app/social/streams',
       element: <Streams />
+    },
+    {
+      path: '*',
+      element: <ErrorNotFound />
     }
   ]);
 
