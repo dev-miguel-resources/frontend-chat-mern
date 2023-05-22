@@ -1,4 +1,4 @@
-const {aliasWebpack, aliasJest} = require('react-app-alias');
+const { aliasWebpack, aliasJest } = require('react-app-alias');
 
 const aliasMap = {
   '@molecules': 'src/molecules',

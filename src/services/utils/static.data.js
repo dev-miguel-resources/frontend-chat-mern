@@ -244,9 +244,9 @@ export const notificationItems = [
 // los tab de arriba
 export const tabItems = (showPassword, showNotification) => {
   const items = [
-    {key: 'Timeline', show: true, icon: <FaUser className="banner-nav-item-name-icon" />},
-    {key: 'Followers', show: true, icon: <FaHeart className="banner-nav-item-name-icon" />},
-    {key: 'Gallery', show: true, icon: <FaImages className="banner-nav-item-name-icon" />},
+    { key: 'Timeline', show: true, icon: <FaUser className="banner-nav-item-name-icon" /> },
+    { key: 'Followers', show: true, icon: <FaHeart className="banner-nav-item-name-icon" /> },
+    { key: 'Gallery', show: true, icon: <FaImages className="banner-nav-item-name-icon" /> },
     {
       key: 'Change Password',
       show: showPassword,

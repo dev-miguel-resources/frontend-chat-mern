@@ -1,11 +1,7 @@
-import React from 'react'
+import React from 'react';
 
 const Streams = () => {
-  return (
-    <div>
-      Hello am Streams Red Social
-    </div>
-  )
-}
+  return <div>Hello am Streams Red Social</div>;
+};
 
-export default Streams
+export default Streams;

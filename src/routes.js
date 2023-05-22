@@ -1,4 +1,4 @@
-import {useRoutes} from 'react-router-dom';
+import { useRoutes } from 'react-router-dom';
 import AuthTabs from '@atoms/auth/auth-tabs/AuthTabs';
 import ForgotPassword from '@atoms/auth/forgot-password/ForgotPassword';
 import ResetPassword from '@atoms/auth/reset-password/ResetPassword';

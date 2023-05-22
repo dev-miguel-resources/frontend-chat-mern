@@ -5,7 +5,13 @@
     "jest/globals": true // darle soporte a jest/globals con las especificaciones del jest
   },
   // el 1: plugin de soporte para react, el 2: plugin de soporte a js, el 3: plugin de soporte a hooks, el 4: plugin de soporte para prettier
-  "extends": ["plugin:react/recommended", "standard", "plugin:react-hooks/recommended", "plugin:prettier/recommended"],
+  "extends": [
+    "plugin:react/recommended",
+    "standard",
+    "plugin:react-hooks/recommended",
+    "plugin:prettier/recommended",
+    "plugin:jest/recommended"
+  ],
   "parserOptions": {
     "ecmaFeatures": {
       "jsx": true // me permite incorporar la lectura desde el eslint a archivos que sean jsx
@@ -26,13 +32,15 @@
     }
   },
   "rules": {
-    "prettier/prettier": ["error", {}, {"usePrettierrc": true}], // que el eslint trabaje con el prettier y que si el prettier hay cosas que no están bien formateadas las tome como error
+    "prettier/prettier": ["error", {}, { "usePrettierrc": true }], // que el eslint trabaje con el prettier y que si el prettier hay cosas que no están bien formateadas las tome como error
     "semi": [2, "always"], // Si no hay ; al final de las sentencias lo tome como error
     "quotes": ["error", "single"], // especificar trabajar con comillas simples por obligación
-    "space-before-function-paren": [0, {"anonymous": "always", "named": "always"}], // le especifico que los paréntesis puedan quedar al lado de las funciones ya sean nombradas o no
+    "space-before-function-paren": [0, { "anonymous": "always", "named": "always" }], // le especifico que los paréntesis puedan quedar al lado de las funciones ya sean nombradas o no
     "camelcase": 2, // definir que las variables y funciones deben ser descritas en camelCase
     "no-return-assign": 0, // que no de error si retornas directamente una asignación
     "react/react-in-jsx-scope": 0, // me permite no tener que de manera obligatoria en mis componentes agregar la importación por default de React
-    "react-display-name": 0 // mientras no le el nombre al componente que no se queje inmediante el eslint
+    "react-display-name": 0, // mientras no le el nombre al componente que no se queje inmediante el eslint
+    "no-unused-vars": "warn",
+    "no-useless-return": "off"
   }
 }

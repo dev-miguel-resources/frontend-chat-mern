@@ -1,10 +1,9 @@
-import { useNavigate } from "react-router-dom";
-import Button from "@molecules/button/Button";
+import { useNavigate } from 'react-router-dom';
+import Button from '@molecules/button/Button';
 import '@atoms/error/ErrorNotFound.scss';
 
 // Design Patern Render Props: https://medium.com/@miguel.angel.romero.gtz/apuntes-de-react-patrones-render-props-949006ac097f
 const ErrorNotFound = () => {
-
   const navigate = useNavigate();
 
   return (
