@@ -30,7 +30,7 @@ Input.propTypes = {
   id: PropTypes.string,
   name: PropTypes.string,
   type: PropTypes.string,
-  value: PropTypes.string,
+  value: PropTypes.any, // revisar otra forma
   className: PropTypes.string,
   labelText: PropTypes.string,
   placeholder: PropTypes.string,
