@@ -1,7 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import Button from '@molecules/button/Button';
 import Input from '@molecules/input/Input';
+import useLocalStorage from '@hooks/useLocalStorage';
+import useSessionStorage from '@hooks/useSessionStorage';
 import { authService } from '@services/api/auth/auth.service';
 import { UtilsService } from '@services/utils/utils.service';
 import '@atoms/auth/register/Register.scss';
@@ -16,7 +19,10 @@ const Register = () => {
   const [alertType, setAlertType] = useState('');
   const [hasError, setHasError] = useState(false);
   const [user, setUser] = useState();
-
+  const [setStoredUsername] = useLocalStorage('username', 'set');
+  const [setLoggedIn] = useLocalStorage('keepLoggedIn', 'set');
+  const [pageReload] = useSessionStorage('pageReload', 'set');
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const registerUser = async (event) => {
@@ -32,10 +38,11 @@ const Register = () => {
         avatarColor,
         avatarImage
       });
-      console.log(result);
-      setUser(result.data.user);
+      setLoggedIn(true);
+      setStoredUsername(username);
       setHasError(false);
       setAlertType('alert-success');
+      UtilsService.dispatchUser(result, pageReload, dispatch, setUser);
     } catch (error) {
       setLoading(false);
       setHasError(true);
@@ -65,7 +72,7 @@ const Register = () => {
             value={username}
             labelText="Username"
             placeholder="Enter Username"
-            style={{ border: `${hasError} ? '1px solid #fa9b8a': ''` }}
+            style={{ border: `${hasError} ? '2px inset': ''` }}
             handleChange={(event) => setUsername(event.target.value)}
           />
           <Input
@@ -75,7 +82,7 @@ const Register = () => {
             value={email}
             labelText="Email"
             placeholder="Enter Email"
-            style={{ border: `${hasError} ? '1px solid #fa9b8a': ''` }}
+            style={{ border: `${hasError} ? '2px inset': ''` }}
             handleChange={(event) => setEmail(event.target.value)}
           />
           <Input
@@ -85,7 +92,7 @@ const Register = () => {
             value={password}
             labelText="Password"
             placeholder="Enter Password"
-            style={{ border: `${hasError} ? '1px solid #fa9b8a': ''` }}
+            style={{ border: `${hasError} ? '2px inset': ''` }}
             handleChange={(event) => setPassword(event.target.value)}
           />
         </div>

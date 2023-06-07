@@ -1,3 +1,4 @@
+import { addUser } from '@redux-toolkit/reducers/user/user.reducer';
 import { avatarColors } from '@services/utils/static.data';
 import { floor, random } from 'lodash';
 
@@ -31,5 +32,11 @@ export class UtilsService {
     context.fillText(text, canvas.width / 2, canvas.height / 2);
     // Devolver este elemento canvas como imagen en formato png
     return canvas.toDataURL('image/png');
+  }
+
+  static dispatchUser(result, pageReload, dispatch, setUser) {
+    pageReload(true);
+    dispatch(addUser({ token: result.data.token, profile: result.data.user }));
+    setUser(result.data.user);
   }
 }

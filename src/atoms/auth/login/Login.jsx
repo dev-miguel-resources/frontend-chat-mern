@@ -1,8 +1,12 @@
 import { useState, useEffect } from 'react';
 import { FaArrowRight } from 'react-icons/fa';
 import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import Input from '@molecules/input/Input';
 import Button from '@molecules/button/Button';
+import useLocalStorage from '@hooks/useLocalStorage';
+import useSessionStorage from '@hooks/useSessionStorage';
+import { UtilsService } from '@services/utils/utils.service';
 import { authService } from '@services/api/auth/auth.service';
 import '@atoms/auth/login/Login.scss';
 
@@ -15,18 +19,22 @@ const Login = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const [alertType, setAlertType] = useState('');
   const [user, setUser] = useState();
-
+  const [setStoredUsername] = useLocalStorage('username', 'set');
+  const [setLoggedIn] = useLocalStorage('keepLoggedIn', 'set');
+  const [pageReload] = useSessionStorage('pageReload', 'set');
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const loginUser = async (event) => {
     setLoading(true);
     event.preventDefault();
     try {
       const result = await authService.signIn({ username, password });
-      setUser(result.data.user);
-      setKeepLoggedIn(keepLoggedIn);
+      setLoggedIn(keepLoggedIn);
+      setStoredUsername(username);
       setHasError(false);
       setAlertType('alert-success');
+      UtilsService.dispatchUser(result, pageReload, dispatch, setUser);
     } catch (error) {
       setLoading(false);
       setHasError(true);
@@ -56,7 +64,7 @@ const Login = () => {
             value={username}
             labelText="Username"
             placeholder="Enter Username"
-            style={{ border: `${hasError} ? '1px solid #fa9b8a': ''` }}
+            style={{ border: `${hasError} ? '2px inset': ''` }}
             handleChange={(event) => setUsername(event.target.value)}
           />
           <Input
@@ -66,7 +74,7 @@ const Login = () => {
             value={password}
             labelText="Password"
             placeholder="Enter Password"
-            style={{ border: `${hasError} ? '1px solid #fa9b8a': ''` }}
+            style={{ border: `${hasError} ? '2px inset': ''` }}
             handleChange={(event) => setPassword(event.target.value)}
           />
           <label className="checkmark-container" htmlFor="checkbox">
