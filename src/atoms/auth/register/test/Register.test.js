@@ -98,9 +98,9 @@ describe('Register Page', () => {
       const emailElement = screen.getByLabelText('Email');
       const passwordElement = screen.getByLabelText('Password');
 
-      userEvent.type(usernameElement, 'gab');
-      userEvent.type(emailElement, 'gab.com');
-      userEvent.type(passwordElement, 'gab');
+      userEvent.type(usernameElement, 'yorman');
+      userEvent.type(emailElement, 'yorgmail.com');
+      userEvent.type(passwordElement, 'yordev');
       userEvent.click(buttonElement);
 
       const alert = await screen.findByRole('alert');
