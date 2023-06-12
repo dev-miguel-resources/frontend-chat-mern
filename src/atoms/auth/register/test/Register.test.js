@@ -4,7 +4,13 @@ import { act } from 'react-dom/test-utils';
 import Register from '@atoms/auth/register/Register';
 import { server } from '@mocks/server';
 import { UtilsService } from '@services/utils/utils.service';
-import { signUpMockError } from '@mocks/handlers/auth';
+import { signUpMock, signUpMockErrorEmailNotValid } from '@mocks/handlers/auth';
+
+const mockedUseNavigate = jest.fn();
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useNavigate: () => mockedUseNavigate
+}));
 
 describe('Register Page', () => {
   // UNITARY TEST 1
@@ -56,7 +62,7 @@ describe('Register Page', () => {
     });
 
     it('Should change label when clicked button', async () => {
-      // INTEGRATION TEST 1
+      // UNITARY TEST 4
       // GIVEN
       customRender(<Register />);
       jest.spyOn(UtilsService, 'avatarColor');
@@ -84,10 +90,10 @@ describe('Register Page', () => {
   });
 
   describe('Error response with Invalid Credentials', () => {
-    // INTEGRATION TEST 2
-    it('Should display error alert and border', async () => {
+    // INTEGRATION TEST 1
+    it('Should display error alert and border for email is not valid', async () => {
       // GIVEN
-      server.use(signUpMockError);
+      server.use(signUpMockErrorEmailNotValid);
 
       // WHEN
       jest.spyOn(UtilsService, 'avatarColor');
@@ -107,10 +113,35 @@ describe('Register Page', () => {
 
       // THEN
       expect(alert).toBeInTheDocument();
-      expect(alert.textContent).toEqual('Invalid Credentials');
+      expect(alert.textContent).toEqual('Email must be valid');
       await waitFor(() => expect(usernameElement).toHaveStyle({ border: '2px inset' }));
       await waitFor(() => expect(emailElement).toHaveStyle({ border: '2px inset' }));
       await waitFor(() => expect(passwordElement).toHaveStyle({ border: '2px inset' }));
+    });
+  });
+
+  describe('Success', () => {
+    // INTEGRATION TEST 2
+    it('Should navigate to streams page', async () => {
+      // GIVEN
+      server.use(signUpMock);
+
+      // WHEN
+      jest.spyOn(UtilsService, 'avatarColor');
+      jest.spyOn(UtilsService, 'generateAvatar').mockReturnValue('yorman image');
+      customRender(<Register />);
+      const buttonElement = screen.getByRole('button');
+      const usernameElement = screen.getByLabelText('Username');
+      const emailElement = screen.getByLabelText('Email');
+      const passwordElement = screen.getByLabelText('Password');
+
+      userEvent.type(usernameElement, 'yorman');
+      userEvent.type(emailElement, 'yor@gmail.com');
+      userEvent.type(passwordElement, 'yordev');
+      userEvent.click(buttonElement);
+
+      // THEN
+      await waitFor(() => expect(mockedUseNavigate).toHaveBeenCalledWith('/app/social/streams'));
     });
   });
 });
