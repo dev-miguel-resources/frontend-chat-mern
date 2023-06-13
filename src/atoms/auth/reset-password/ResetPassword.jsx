@@ -7,10 +7,6 @@ import { authService } from '@services/api/auth/auth.service';
 import backgroundImage from '@assets/images/background.jpg';
 import '@atoms/auth/reset-password/ResetPassword.scss';
 
-//  Tarea: cuando se actualice correctamente el pass deben enviar al usuario al login
-//  quienes la hagan: 2 decimas para el proyecto final, enviar solo el archivo modificado al correo
-//  con su nombre y apellido con asunto: Tarea Módulo 4: React.js navigation
-
 const ResetPassword = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');

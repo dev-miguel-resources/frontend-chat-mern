@@ -70,7 +70,7 @@ const Login = () => {
           <Input
             id="password"
             name="password"
-            type="password"
+            type="text"
             value={password}
             labelText="Password"
             placeholder="Enter Password"

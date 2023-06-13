@@ -1,13 +1,19 @@
-import { customRender, fireEvent, screen, act, waitFor } from '@root/test.utils';
-import userEvent from '@testing-library/user-event';
+import { signInMock, signInMockError } from '@mocks/handlers/auth';
 import { server } from '@mocks/server';
 import Login from '@atoms/auth/login/Login';
-import { signInMock, signInMockError } from '@mocks/handlers/auth';
-import { UtilsService } from '@services/utils/utils.service';
+import { fireEvent, screen, customRender, waitFor } from '@root/test.utils';
+import userEvent from '@testing-library/user-event';
+import { act } from 'react-dom/test-utils';
 
-describe('Sign In Page', () => {
+const mockedUsedNavigate = jest.fn();
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useNavigate: () => mockedUsedNavigate
+}));
+
+describe('SignIn', () => {
   // UNITARY TEST 1
-  it('Sign In form should have its labels', () => {
+  it('Signin form should have its labels', () => {
     // GIVEN
     customRender(<Login />);
 
@@ -23,33 +29,33 @@ describe('Sign In Page', () => {
   });
 
   // UNITARY TEST 2
-  it('CheckBox should be unchecked', () => {
+  it('Checkbox should be unchecked', () => {
     // GIVEN
     customRender(<Login />);
 
     // WHEN
-    const checkBoxLabel = screen.getByLabelText('Keep me signed in');
+    const checkBoxElement = screen.getByLabelText(/Keep me signed in/i);
 
     // THEN
-    expect(checkBoxLabel).not.toBeChecked();
+    expect(checkBoxElement).not.toBeChecked();
   });
 
   // UNITARY TEST 3
-  it('CheckBox should be checked when clicked', () => {
+  it('Checkbox should be checked when clicked', () => {
     // GIVEN
     customRender(<Login />);
 
     // WHEN
-    const checkBoxLabel = screen.getByLabelText('Keep me signed in');
+    const checkBoxElement = screen.getByLabelText('Keep me signed in');
+    expect(checkBoxElement).not.toBeChecked();
 
     // THEN
-    expect(checkBoxLabel).not.toBeChecked();
-    fireEvent.click(checkBoxLabel);
-    expect(checkBoxLabel).toBeChecked();
+    fireEvent.click(checkBoxElement);
+    expect(checkBoxElement).toBeChecked();
   });
 
+  // UNITARY TEST 3
   describe('Button', () => {
-    // UNITARY TEST 4
     it('Should be disabled', () => {
       // GIVEN
       customRender(<Login />);
@@ -61,7 +67,7 @@ describe('Sign In Page', () => {
       expect(buttonElement).toBeDisabled();
     });
 
-    // UNITARY TEST 5
+    // UNITARY TEST 4
     it('Should be enabled with inputs', () => {
       // GIVEN
       customRender(<Login />);
@@ -69,8 +75,10 @@ describe('Sign In Page', () => {
       // WHEN
       const buttonElement = screen.getByRole('button');
       expect(buttonElement).toBeDisabled();
+
       const usernameElement = screen.getByLabelText('Username');
       const passwordElement = screen.getByLabelText('Password');
+
       fireEvent.change(usernameElement, { target: { value: 'yorman' } });
       fireEvent.change(passwordElement, { target: { value: 'yordev' } });
 
@@ -88,6 +96,7 @@ describe('Sign In Page', () => {
       const buttonElement = screen.getByRole('button');
       const usernameElement = screen.getByLabelText('Username');
       const passwordElement = screen.getByLabelText('Password');
+
       userEvent.type(usernameElement, 'yorman');
       userEvent.type(passwordElement, 'yordev');
 
@@ -103,32 +112,49 @@ describe('Sign In Page', () => {
     });
   });
 
-  // PENDING
-  describe('Error response with Invalid Credentials', () => {
-    // INTEGRATION TEST 2
-    it('Should display error alert and border', async () => {
+  // INTEGRATION TEST 2 PENDING
+  describe('Error', () => {
+    it('should display error alert and border', async () => {
       // GIVEN
       server.use(signInMockError);
+      customRender(<Login />);
 
       // WHEN
-      jest.spyOn(UtilsService, 'avatarColor');
-      jest.spyOn(UtilsService, 'generateAvatar').mockReturnValue('yorman image');
-      customRender(<Login />);
       const buttonElement = screen.getByRole('button');
       const usernameElement = screen.getByLabelText('Username');
       const passwordElement = screen.getByLabelText('Password');
-
-      userEvent.type(usernameElement, 'yorman');
-      userEvent.type(passwordElement, 'yordev');
+      userEvent.type(usernameElement, 'yor');
+      userEvent.type(passwordElement, 'yorman');
       userEvent.click(buttonElement);
 
       const alert = await screen.findByRole('alert');
 
       // THEN
       expect(alert).toBeInTheDocument();
-      expect(alert.textContent).toEqual('Invalid Credentials');
+      expect(alert.textContent).toEqual('Invalid credentials');
+
       await waitFor(() => expect(usernameElement).toHaveStyle({ border: '2px inset' }));
       await waitFor(() => expect(passwordElement).toHaveStyle({ border: '2px inset' }));
+    });
+  });
+
+  // INTEGRATION TEST 3
+  describe('Success', () => {
+    it('should navigate to streams page', async () => {
+      // GIVEN
+      server.use(signInMock);
+      customRender(<Login />);
+
+      // WHEN
+      const buttonElement = screen.getByRole('button');
+      const usernameElement = screen.getByLabelText('Username');
+      const passwordElement = screen.getByLabelText('Password');
+      userEvent.type(usernameElement, 'yorman');
+      userEvent.type(passwordElement, 'yordev');
+      userEvent.click(buttonElement);
+
+      // THEN
+      await waitFor(() => expect(mockedUsedNavigate).toHaveBeenCalledWith('/app/social/streams'));
     });
   });
 });
