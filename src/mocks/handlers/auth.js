@@ -39,6 +39,16 @@ export const forgotPasswordMockError = rest.post(`${BASE_URL}/forgot-password`, 
   return res(ctx.status(400), ctx.json(result));
 });
 
+export const resetPasswordMock = rest.post(`${BASE_URL}/reset-password/1234567890`, (_req, res, ctx) => {
+  const result = { message: 'Password successfully updated.' };
+  return res(ctx.json(result));
+});
+
+export const resetPasswordMockError = rest.post(`${BASE_URL}/reset-password/1234567890`, (_req, res, ctx) => {
+  const result = { message: 'Passwords do not match' };
+  return res(ctx.status(400), ctx.json(result));
+});
+
 export const authHandlers = [
   signUpMock,
   signUpMockError,
@@ -46,5 +56,7 @@ export const authHandlers = [
   signInMock,
   signInMockError,
   forgotPasswordMock,
-  forgotPasswordMockError
+  forgotPasswordMockError,
+  resetPasswordMock,
+  resetPasswordMockError
 ];
