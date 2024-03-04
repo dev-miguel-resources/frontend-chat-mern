@@ -4,9 +4,6 @@
   "private": true,
   "dependencies": {
     "@reduxjs/toolkit": "1.9.5",
-    "@testing-library/jest-dom": "5.16.5",
-    "@testing-library/react": "13.3.0",
-    "@testing-library/user-event": "13.5.0",
     "axios": "0.27.2",
     "lodash": "4.17.21",
     "react": "18.2.0",
@@ -15,8 +12,7 @@
     "react-loading-skeleton": "3.3.1",
     "react-redux": "8.0.7",
     "react-router-dom": "6.3.0",
-    "react-scripts": "5.0.1",
-    "web-vitals": "2.1.0"
+    "react-scripts": "5.0.1"
   },
   "scripts": {
     "start": "react-app-rewired start",
@@ -46,6 +42,9 @@
     ]
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "5.16.5",
+    "@testing-library/react": "13.3.0",
+    "@testing-library/user-event": "13.5.0",
     "eslint": "8.40.0",
     "eslint-config-prettier": "8.8.0",
     "eslint-config-standard": "17.0.0",
