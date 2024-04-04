@@ -3,8 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import Button from '@molecules/button/Button';
 import Input from '@molecules/input/Input';
+
 import useLocalStorage from '@hooks/useLocalStorage';
 import useSessionStorage from '@hooks/useSessionStorage';
+
 import { authService } from '@services/api/auth/auth.service';
 import { UtilsService } from '@services/utils/utils.service';
 import '@atoms/auth/register/Register.scss';

@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom'; // hooks -> use
 import Button from '@molecules/button/Button';
 import '@atoms/error/ErrorNotFound.scss';
 
@@ -6,6 +6,7 @@ import '@atoms/error/ErrorNotFound.scss';
 const ErrorNotFound = () => {
   const navigate = useNavigate();
 
+  // props
   return (
     <div className="error-container">
       <div className="oops">Oops!</div>
